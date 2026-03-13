@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anand Sweets & Savouries — Authentic Indian Sweets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    /* ── CSS RESET & TOKENS ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ivory:   #faf6f0;
+      --cream:   #f3ece0;
+      --gold:    #c8943a;
+      --gold-lt: #e8b96a;
+      --brown:   #5a3218;
+      --dark:    #1e1208;
+      --green:   #3d6b44;
+      --red:     #b83232;
+      --text:    #2e1a0e;
+      --muted:   #7a6250;
+      --border:  #e0d4c0;
+
+      --ff-display: 'Cormorant Garamond', Georgia, serif;
+      --ff-accent:  'Playfair Display', Georgia, serif;
+      --ff-body:    'DM Sans', sans-serif;
+
+      --section-pad: clamp(3rem, 7vw, 6rem);
+      --container:   1280px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--ff-body);
+      background: var(--ivory);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: var(--ff-body); }
+
+    /* ── UTILITY ─────────────────────────────────────────────────── */
+    .container { max-width: var(--container); margin: auto; padding: 0 clamp(1rem, 4vw, 3rem); }
+    .section-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      letter-spacing: .02em;
+      color: var(--dark);
+    }
+    .section-title span { color: var(--gold); font-style: italic; }
+    .tag-label {
+      font-size: .7rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .btn {
+      display: inline-block;
+      padding: .75rem 2rem;
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      border: 1.5px solid var(--brown);
+      color: var(--brown);
+      background: transparent;
+      transition: background .25s, color .25s;
+    }
+    .btn:hover { background: var(--brown); color: #fff; }
+    .btn-gold {
+      background: var(--gold);
+      color: #fff;
+      border-color: var(--gold);
+    }
+    .btn-gold:hover { background: var(--brown); border-color: var(--brown); }
+
+    /* ── ANNOUNCEMENT BAR ────────────────────────────────────────── */
+    .announcement {
+      background: var(--dark);
+      color: #e8d9c0;
+      font-size: .72rem;
+      letter-spacing: .06em;
+      text-align: center;
+      padding: .55rem 1rem;
+    }
+
+    /* ── HEADER / NAV ────────────────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--ivory);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding: .9rem 0;
+    }
+    .logo {
+      font-family: var(--ff-accent);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: .04em;
+      white-space: nowrap;
+    }
+    .logo span { color: var(--gold); }
+    nav { display: flex; gap: .1rem; }
+    .nav-item { position: relative; }
+    .nav-item > a {
+      display: block;
+      padding: .5rem .85rem;
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--text);
+      transition: color .2s;
+    }
+    .nav-item > a:hover { color: var(--gold); }
+    /* Dropdown */
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 2px);
+      left: 0;
+      min-width: 180px;
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 32px rgba(90,50,24,.08);
+      padding: .5rem 0;
+    }
+    .dropdown a {
+      display: block;
+      padding: .55rem 1.2rem;
+      font-size: .78rem;
+      color: var(--text);
+      transition: background .15s;
+    }
+    .dropdown a:hover { background: var(--cream); color: var(--gold); }
+    .nav-item:hover .dropdown { display: block; }
+    .nav-actions { display: flex; align-items: center; gap: 1rem; }
+    .nav-icon {
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      color: var(--text);
+      padding: .3rem;
+      transition: color .2s;
+    }
+    .nav-icon:hover { color: var(--gold); }
+    .cart-btn {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      padding: .45rem .9rem;
+      transition: border-color .2s, color .2s;
+    }
+    .cart-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .cart-count {
+      background: var(--gold);
+      color: #fff;
+      font-size: .65rem;
+      font-weight: 700;
+      padding: .1em .4em;
+      border-radius: 99px;
+    }
+
+    /* ── HERO SLIDER ─────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      height: clamp(380px, 60vw, 680px);
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      transition: opacity .8s ease;
+    }
+    .hero-slide.active { opacity: 1; z-index: 2; }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(100deg, rgba(30,18,8,.72) 0%, rgba(30,18,8,.1) 60%);
+    }
+    /* Slide colour fallbacks */
+    .hero-slide:nth-child(1) .hero-bg { background-color: #2b1a0a; background-image: url('https://images.unsplash.com/photo-1601050690597-df0568f70950?w=1600&q=80'); }
+    .hero-slide:nth-child(2) .hero-bg { background-color: #1c2b18; background-image: url('https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=1600&q=80'); }
+    .hero-slide:nth-child(3) .hero-bg { background-color: #2b0e0e; background-image: url('https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=1600&q=80'); }
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 560px;
+      padding: 0 clamp(1.5rem, 6vw, 5rem);
+      color: #fff;
+    }
+    .hero-label {
+      font-size: .7rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold-lt);
+      margin-bottom: .75rem;
+    }
+    .hero-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+    .hero-title em { font-style: italic; color: var(--gold-lt); }
+    .hero-sub {
+      font-size: .9rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,.8);
+      margin-bottom: 2rem;
+      max-width: 420px;
+    }
+    .hero-dots {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: .5rem;
+      z-index: 4;
+    }
+    .hero-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.4);
+      border: none;
+      cursor: pointer;
+      transition: background .3s, transform .3s;
+    }
+    .hero-dot.active { background: var(--gold-lt); transform: scale(1.3); }
+
+    /* ── TRUST STRIP ─────────────────────────────────────────────── */
+    .trust-strip {
+      background: var(--dark);
+      padding: 1.2rem 0;
+    }
+    .trust-items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem 4rem;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      color: #e8d9c0;
+    }
+    .trust-icon { font-size: 1.4rem; }
+    .trust-text { font-size: .78rem; letter-spacing: .04em; }
+    .trust-text strong { display: block; font-weight: 500; font-size: .84rem; }
+
+    /* ── CATEGORY GRID ───────────────────────────────────────────── */
+    .categories {
+      padding: var(--section-pad) 0;
+      background: var(--cream);
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .cat-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1;
+      border-radius: 4px;
+      background: var(--border);
+      cursor: pointer;
+    }
+    .cat-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .5s ease;
+    }
+    .cat-card:hover img { transform: scale(1.07); }
+    .cat-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(30,18,8,.75) 0%, transparent 55%);
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+    }
+    .cat-card-label {
+      color: #fff;
+      font-family: var(--ff-display);
+      font-size: 1.1rem;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    .cat-card-count {
+      font-size: .68rem;
+      letter-spacing: .06em;
+      color: var(--gold-lt);
+      margin-top: .2rem;
+    }
+
+    /* ── BEST SELLERS ────────────────────────────────────────────── */
+    .bestsellers { padding: var(--section-pad) 0; }
+    .section-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .product-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      transition: box-shadow .3s;
+    }
+    .product-card:hover { box-shadow: 0 12px 40px rgba(90,50,24,.1); }
+    .product-img {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: var(--cream);
+    }
+    .product-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .5s ease;
+    }
+    .product-card:hover .product-img img { transform: scale(1.05); }
+    .product-badge {
+      position: absolute;
+      top: .75rem; left: .75rem;
+      background: var(--red);
+      color: #fff;
+      font-size: .62rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: .25em .7em;
+      border-radius: 2px;
+    }
+    .product-body { padding: 1rem 1.1rem 1.3rem; }
+    .product-name {
+      font-family: var(--ff-display);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: .35rem;
+    }
+    .product-desc {
+      font-size: .76rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: .9rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; }
+    .product-price {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--brown);
+    }
+    .product-price .original {
+      font-size: .78rem;
+      text-decoration: line-through;
+      color: var(--muted);
+      margin-left: .4rem;
+    }
+    .add-btn {
+      background: var(--dark);
+      color: #fff;
+      border: none;
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .55rem 1rem;
+      transition: background .25s;
+    }
+    .add-btn:hover { background: var(--gold); }
+    .sold-out-badge {
+      position: absolute;
+      top: .75rem; right: .75rem;
+      background: rgba(30,18,8,.7);
+      color: #fff;
+      font-size: .62rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: .25em .7em;
+    }
+
+    /* ── GIFTING ─────────────────────────────────────────────────── */
+    .gifting {
+      padding: var(--section-pad) 0;
+      background: var(--dark);
+      color: #e8d9c0;
+    }
+    .gifting .section-title { color: #e8d9c0; }
+    .gifting .section-title span { color: var(--gold-lt); }
+    .gifting .tag-label { color: var(--gold-lt); }
+    .gift-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .gift-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .gift-card img {
+      width: 100%; aspect-ratio: 4/3;
+      object-fit: cover;
+      transition: transform .5s;
+    }
+    .gift-card:hover img { transform: scale(1.05); }
+    .gift-body {
+      padding: 1.2rem 1.3rem 1.5rem;
+      background: rgba(255,255,255,.04);
+    }
+    .gift-title {
+      font-family: var(--ff-display);
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: .5rem;
+    }
+    .gift-desc {
+      font-size: .78rem;
+      color: rgba(232,217,192,.7);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .btn-outline-light {
+      border: 1.5px solid rgba(200,148,58,.6);
+      color: var(--gold-lt);
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .6rem 1.2rem;
+      display: inline-block;
+      transition: background .25s, color .25s;
+    }
+    .btn-outline-light:hover { background: var(--gold); color: #fff; border-color: var(--gold); }
+
+    /* ── PRESS LOGOS ─────────────────────────────────────────────── */
+    .press {
+      padding: 3.5rem 0;
+      background: var(--cream);
+      border-top: 1px solid var(--border);
+    }
+    .press-label { text-align: center; margin-bottom: 1.5rem; }
+    .press-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 2.5rem 4rem;
+      filter: grayscale(1) opacity(.55);
+    }
+    .press-logo {
+      font-family: var(--ff-accent);
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--text);
+    }
+
+    /* ── SNACK CATEGORIES ────────────────────────────────────────── */
+    .snacks { padding: var(--section-pad) 0; }
+    .snack-scroll {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .snack-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: var(--cream);
+      cursor: pointer;
+    }
+    .snack-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+    .snack-card:hover img { transform: scale(1.08); }
+    .snack-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(30,18,8,.7) 0%, transparent 45%);
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+    }
+    .snack-name {
+      color: #fff;
+      font-family: var(--ff-display);
+      font-size: 1.05rem;
+    }
+
+    /* ── OUR STORY ───────────────────────────────────────────────── */
+    .story {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 420px;
+    }
+    .story-img { overflow: hidden; }
+    .story-img img { width: 100%; height: 100%; object-fit: cover; }
+    .story-content {
+      background: var(--brown);
+      color: #e8d9c0;
+      padding: clamp(2rem, 6vw, 5rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .story-content .tag-label { color: var(--gold-lt); }
+    .story-content .section-title { color: #e8d9c0; margin: .75rem 0 1.25rem; }
+    .story-content p { font-size: .9rem; line-height: 1.8; opacity: .85; margin-bottom: 1rem; }
+    .story-content .btn { border-color: rgba(232,217,192,.5); color: #e8d9c0; }
+    .story-content .btn:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+    /* ── TRUST BADGES ────────────────────────────────────────────── */
+    .trust-badges {
+      padding: 4rem 0;
+      background: var(--cream);
+    }
+    .badges-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem 4rem;
+    }
+    .badge {
+      text-align: center;
+      max-width: 140px;
+    }
+    .badge-icon {
+      width: 64px; height: 64px;
+      margin: 0 auto 1rem;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+    }
+    .badge-title {
+      font-family: var(--ff-display);
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: .3rem;
+    }
+    .badge-sub { font-size: .75rem; color: var(--muted); line-height: 1.4; }
+
+    /* ── BLOGS ───────────────────────────────────────────────────── */
+    .blogs { padding: var(--section-pad) 0; }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .blog-card { border: 1px solid var(--border); overflow: hidden; }
+    .blog-img { aspect-ratio: 16/9; overflow: hidden; background: var(--cream); }
+    .blog-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+    .blog-card:hover .blog-img img { transform: scale(1.05); }
+    .blog-body { padding: 1.2rem; }
+    .blog-date { font-size: .7rem; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; margin-bottom: .5rem; }
+    .blog-title {
+      font-family: var(--ff-display);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: .75rem;
+      line-height: 1.3;
+    }
+    .read-more {
+      font-size: .75rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+    }
+    .read-more:hover { text-decoration: underline; }
+
+    /* ── AVAILABLE ON ────────────────────────────────────────────── */
+    .available {
+      padding: 4rem 0;
+      background: var(--dark);
+      text-align: center;
+      color: #e8d9c0;
+    }
+    .available .tag-label { color: var(--gold-lt); }
+    .available h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 300;
+      color: #fff;
+      margin: .5rem 0 .4rem;
+    }
+    .available p { font-size: .82rem; color: rgba(232,217,192,.65); margin-bottom: 2rem; }
+    .platform-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem 2.5rem;
+    }
+    .platform-pill {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: .7rem 1.5rem;
+      font-family: var(--ff-display);
+      font-size: 1.05rem;
+      color: #fff;
+      letter-spacing: .04em;
+      transition: background .25s, border-color .25s;
+    }
+    .platform-pill:hover { background: var(--gold); border-color: var(--gold); }
+
+    /* ── FOOTER ──────────────────────────────────────────────────── */
+    footer {
+      background: #110c06;
+      color: #b09070;
+      padding: 4rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-brand .logo { color: #e8d9c0; font-size: 1.3rem; }
+    .footer-brand p { font-size: .8rem; line-height: 1.7; margin: 1rem 0 1.5rem; max-width: 280px; }
+    .footer-col h4 {
+      font-family: var(--ff-display);
+      font-size: 1rem;
+      font-weight: 500;
+      color: #e8d9c0;
+      margin-bottom: 1rem;
+      letter-spacing: .04em;
+    }
+    .footer-col li + li { margin-top: .5rem; }
+    .footer-col a {
+      font-size: .8rem;
+      color: #b09070;
+      transition: color .2s;
+    }
+    .footer-col a:hover { color: var(--gold-lt); }
+    .footer-contact p { font-size: .8rem; line-height: 1.7; }
+    .newsletter-form { display: flex; gap: .5rem; margin-top: 1rem; }
+    .newsletter-form input {
+      flex: 1;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      color: #e8d9c0;
+      padding: .6rem .9rem;
+      font-size: .78rem;
+      outline: none;
+    }
+    .newsletter-form input::placeholder { color: rgba(255,255,255,.3); }
+    .newsletter-form button {
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      padding: .6rem 1rem;
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .newsletter-form button:hover { background: var(--gold-lt); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-top: 2rem;
+      font-size: .72rem;
+      color: rgba(176,144,112,.5);
+    }
+
+    /* ── CART DRAWER ─────────────────────────────────────────────── */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s;
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: all; }
+    .cart-drawer {
+      position: fixed;
+      top: 0; right: 0;
+      width: min(420px, 100vw);
+      height: 100%;
+      background: var(--ivory);
+      z-index: 201;
+      transform: translateX(100%);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.3rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .cart-head h3 { font-family: var(--ff-display); font-size: 1.3rem; font-weight: 500; }
+    .close-cart { background: none; border: none; font-size: 1.4rem; color: var(--text); padding: .2rem; }
+    .cart-body { flex: 1; overflow-y: auto; padding: 1.5rem; }
+    .cart-empty { text-align: center; color: var(--muted); margin-top: 3rem; }
+    .cart-foot {
+      padding: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .cart-subtotal {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--ff-display);
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .cart-foot .btn { width: 100%; text-align: center; }
+
+    /* ── ANIMATIONS ──────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { animation: fadeUp .7s ease both; }
+    .delay-1 { animation-delay: .12s; }
+    .delay-2 { animation-delay: .24s; }
+    .delay-3 { animation-delay: .36s; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { display: none; }
+      .story { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── ANNOUNCEMENT BAR ──────────────────────────────────────────── -->
+<div class="announcement">
+  Website is under development
+</div>
+
+<!-- ── HEADER ────────────────────────────────────────────────────── -->
+<header>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="logo">TheSnackMill<span>&</span>Sweets</a>
+
+      <nav>
+        <div class="nav-item">
+          <a href="#">Shop All ▾</a>
+          <div class="dropdown">
+            <a href="#">Sweets</a>
+            <a href="#">Dry Fruits</a>
+            <a href="#">Specialty</a>
+            <a href="#">Snacks</a>
+            <a href="#">Guilt Free</a>
+            <a href="#">Gifting</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#">Sweets ▾</a>
+          <div class="dropdown">
+            <a href="#">All Sweets</a>
+            <a href="#">Burfi</a>
+            <a href="#">Mysore Pak</a>
+            <a href="#">Healthy Laddu</a>
+            <a href="#">Peda</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#">Namkeen ▾</a>
+          <div class="dropdown">
+            <a href="#">Healthy Snacks</a>
+            <a href="#">Northern Specials</a>
+            <a href="#">Southern Specials</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#">Dry Fruits ▾</a>
+          <div class="dropdown">
+            <a href="#">All Dry Fruits</a>
+            <a href="#">Flavoured Nuts</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#">Gifting ▾</a>
+          <div class="dropdown">
+            <a href="#">Assorted Sweets</a>
+            <a href="#">Souvenir Gift Box</a>
+            <a href="#">Wedding Gifting</a>
+            <a href="#">Corporate Gifting</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#">About Us ▾</a>
+          <div class="dropdown">
+            <a href="#">About Us</a>
+            <a href="#">Our Brands</a>
+            <a href="#">Global Footprint</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="nav-icon" title="Search">🔍</button>
+        <button class="nav-icon" title="Account">👤</button>
+        <button class="cart-btn" onclick="toggleCart()">
+          🛒 Cart <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ── HERO SLIDER ────────────────────────────────────────────────── -->
+<section class="hero" id="heroSlider">
+  <div class="hero-slide active">
+    <div class="hero-bg"></div>
+    <div class="hero-content reveal">
+      <p class="hero-label">Heritage Since 1988</p>
+      <h1 class="hero-title">Excellence in<br>Every <em>Bite</em></h1>
+      <p class="hero-sub">Three decades of crafting authentic Indian sweets with the finest ingredients. The taste of Royal India, delivered to your home.</p>
+      <a href="#bestsellers" class="btn btn-gold">Shop Best Sellers</a>
+    </div>
+  </div>
+  <div class="hero-slide">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-label">No Palm Oil · No Preservatives</p>
+      <h1 class="hero-title">Pure. <em>Natural.</em><br>Handmade.</h1>
+      <p class="hero-sub">Every piece is crafted with love using wholesome ingredients—pure desi ghee, fresh dairy, and the finest nuts.</p>
+      <a href="#categories" class="btn btn-gold">Explore Range</a>
+    </div>
+  </div>
+  <div class="hero-slide">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-label">Gifting Made Joyful</p>
+      <h1 class="hero-title">The Essence of<br><em>Celebration</em></h1>
+      <p class="hero-sub">Exquisitely packaged gift boxes to celebrate every occasion with absolute grandeur.</p>
+      <a href="#gifting" class="btn btn-gold">Gift Now</a>
+    </div>
+  </div>
+
+  <div class="hero-dots">
+    <button class="hero-dot active" onclick="goSlide(0)"></button>
+    <button class="hero-dot" onclick="goSlide(1)"></button>
+    <button class="hero-dot" onclick="goSlide(2)"></button>
+  </div>
+</section>
+
+<!-- ── TRUST STRIP ────────────────────────────────────────────────── -->
+<div class="trust-strip">
+  <div class="container">
+    <div class="trust-items">
+      <div class="trust-item">
+        <span class="trust-icon">❤️</span>
+        <div class="trust-text"><strong>Loved by India</strong>5 Lakh+ Customers</div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">🤲</span>
+        <div class="trust-text"><strong>Handmade</strong>Every piece made with love</div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">🚚</span>
+        <div class="trust-text"><strong>Ships in 5–7 Days</strong>Write to expedite</div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">🌿</span>
+        <div class="trust-text"><strong>No Preservatives</strong>Pure taste, naturally fresh</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CATEGORY GRID ──────────────────────────────────────────────── -->
+<section class="categories" id="categories">
+  <div class="container">
+    <div class="section-header">
+      <p class="tag-label">Discover</p>
+      <h2 class="section-title">Shop Our <span>Range</span></h2>
+    </div>
+    <div class="cat-grid">
+      <a href="#" class="cat-card">
+        <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=400&q=80" alt="Sweets Gifting" loading="lazy" />
+        <div class="cat-card-overlay">
+          <div>
+            <div class="cat-card-label">Sweets Gifting</div>
+            <div class="cat-card-count">8 Products</div>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="cat-card">
+        <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=400&q=80" alt="Dry Fruits" loading="lazy" />
+        <div class="cat-card-overlay">
+          <div>
+            <div class="cat-card-label">Dry Fruits</div>
+            <div class="cat-card-count">10 Products</div>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="cat-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="Biscottis" loading="lazy" />
+        <div class="cat-card-overlay">
+          <div>
+            <div class="cat-card-label">Biscottis</div>
+            <div class="cat-card-count">6 Products</div>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="cat-card">
+        <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&q=80" alt="Guilt Free" loading="lazy" />
+        <div class="cat-card-overlay">
+          <div>
+            <div class="cat-card-label">Guilt Free</div>
+            <div class="cat-card-count">14 Products</div>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="cat-card">
+        <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=400&q=80" alt="Snacks" loading="lazy" />
+        <div class="cat-card-overlay">
+          <div>
+            <div class="cat-card-label">Snacks</div>
+            <div class="cat-card-count">36 Products</div>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="cat-card">
+        <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&q=80" alt="Sweets" loading="lazy" />
+        <div class="cat-card-overlay">
+          <div>
+            <div class="cat-card-label">Sweets</div>
+            <div class="cat-card-count">41 Products</div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── BEST SELLERS ───────────────────────────────────────────────── -->
+<section class="bestsellers" id="bestsellers">
+  <div class="container">
+    <div class="section-row">
+      <div>
+        <p class="tag-label">Fan Favourites</p>
+        <h2 class="section-title">Best <span>Sellers</span></h2>
+      </div>
+      <a href="#" class="btn">Explore All</a>
+    </div>
+    <div class="product-grid">
+      <!-- Product Card Template -->
+      <div class="product-card">
+        <div class="product-img">
+          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80" alt="Mysore Pak" loading="lazy" />
+          <span class="sold-out-badge">Sold Out</span>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">Mysore Pak</h3>
+          <p class="product-desc">The pride of Karnataka — melt-in-your-mouth soft Mysore Pak celebrating joys in every bite.</p>
+          <div class="product-footer">
+            <span class="product-price">₹ 260</span>
+            <button class="add-btn" onclick="addToCart('Mysore Pak', 260)">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <img src="https://images.unsplash.com/photo-1559703248-dcaaec9fab78?w=500&q=80" alt="Kaju Katli" loading="lazy" />
+          <span class="sold-out-badge">Sold Out</span>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">Kaju Katli</h3>
+          <p class="product-desc">The cashew fudge that adds all the dhamaka to every occasion. Lip-smacking and irresistible.</p>
+          <div class="product-footer">
+            <span class="product-price">₹ 370</span>
+            <button class="add-btn" onclick="addToCart('Kaju Katli', 370)">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=500&q=80" alt="Motichoor Laddu" loading="lazy" />
+          <span class="product-badge">Popular</span>
+          <span class="sold-out-badge">Sold Out</span>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">Motichoor Laddu</h3>
+          <p class="product-desc">Made with pure desi ghee, coarse chickpea flour and nuts for an authentic celebratory treat.</p>
+          <div class="product-footer">
+            <span class="product-price">₹ 230</span>
+            <button class="add-btn" onclick="addToCart('Motichoor Laddu', 230)">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80" alt="Royal Baklava" loading="lazy" />
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">Royal Baklava Box (350g)</h3>
+          <p class="product-desc">Middle Eastern pastry layers of filo filled with chopped nuts, drizzled with honey syrup.</p>
+          <div class="product-footer">
+            <span class="product-price">₹ 745</span>
+            <button class="add-btn" onclick="addToCart('Royal Baklava Box', 745)">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=500&q=80" alt="Dharwad Peda" loading="lazy" />
+          <span class="sold-out-badge">Sold Out</span>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">Dharwad Peda</h3>
+          <p class="product-desc">A specialty from Dharwad, Karnataka. Mildly sweet, caramelized, with a trademark coffee-brown hue.</p>
+          <div class="product-footer">
+            <span class="product-price">₹ 260</span>
+            <button class="add-btn" onclick="addToCart('Dharwad Peda', 260)">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500&q=80" alt="Premium Biscotti Trio" loading="lazy" />
+          <span class="sold-out-badge">Sold Out</span>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">Premium Biscotti Trio 675g</h3>
+          <p class="product-desc">Pamper your loved ones with the snack mill signature baked biscotti range. Health meets indulgence.</p>
+          <div class="product-footer">
+            <span class="product-price">₹ 1,170</span>
+            <button class="add-btn" onclick="addToCart('Premium Biscotti Trio', 1170)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GIFTING ─────────────────────────────────────────────────────── -->
+<section class="gifting" id="gifting">
+  <div class="container">
+    <div class="section-header">
+      <p class="tag-label">Crafted to Perfection</p>
+      <h2 class="section-title">The Essence of <span>Celebration</span></h2>
+    </div>
+    <div class="gift-grid">
+      <div class="gift-card">
+        <img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=600&q=80" alt="Assorted Gift Boxes" loading="lazy" />
+        <div class="gift-body">
+          <h3 class="gift-title">Assorted Gift Boxes</h3>
+          <p class="gift-desc">Choose from our exquisite hand-picked premium gifting collection. Perfect for every celebration.</p>
+          <a href="#" class="btn-outline-light">View Collection</a>
+        </div>
+      </div>
+      <div class="gift-card">
+        <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=600&q=80" alt="Dry Fruit Gift Boxes" loading="lazy" />
+        <div class="gift-body">
+          <h3 class="gift-title">Dry Fruit Gift Boxes</h3>
+          <p class="gift-desc">Sumptuous assortment of dry fruits & nuts packaged with a touch of Royalty.</p>
+          <a href="#" class="btn-outline-light">View Collection</a>
+        </div>
+      </div>
+      <div class="gift-card">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Souvenir Gift Boxes" loading="lazy" />
+        <div class="gift-body">
+          <h3 class="gift-title">Souvenir Gift Boxes</h3>
+          <p class="gift-desc">Our ode to the beauty and culture of India — each box has a story to tell.</p>
+          <a href="#" class="btn-outline-light">View Collection</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRESS ──────────────────────────────────────────────────────── -->
+<section class="press">
+  <div class="container">
+    <div class="press-label">
+      <p class="tag-label">In The News</p>
+    </div>
+    <div class="press-logos">
+      <span class="press-logo">Vogue India</span>
+      <span class="press-logo">Bazaar</span>
+      <span class="press-logo">Fortune</span>
+      <span class="press-logo">Hindustan Times</span>
+      <span class="press-logo">Forbes India</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SNACK CATEGORIES ───────────────────────────────────────────── -->
+<section class="snacks">
+  <div class="container">
+    <div class="section-row">
+      <div>
+        <p class="tag-label">Crunch Time</p>
+        <h2 class="section-title">Shop Our <span>Snack Range</span></h2>
+      </div>
+    </div>
+    <div class="snack-scroll">
+      <a href="#" class="snack-card">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&q=80" alt="South Indian Specials" loading="lazy" />
+        <div class="snack-overlay"><span class="snack-name">South Indian Specials</span></div>
+      </a>
+      <a href="#" class="snack-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=80" alt="Indian Bakery" loading="lazy" />
+        <div class="snack-overlay"><span class="snack-name">Indian Bakery</span></div>
+      </a>
+      <a href="#" class="snack-card">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&q=80" alt="Tea Time Snacks" loading="lazy" />
+        <div class="snack-overlay"><span class="snack-name">Tea Time Snacks</span></div>
+      </a>
+      <a href="#" class="snack-card">
+        <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=300&q=80" alt="Indian Biscottis" loading="lazy" />
+        <div class="snack-overlay"><span class="snack-name">Indian Biscottis</span></div>
+      </a>
+      <a href="#" class="snack-card">
+        <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=300&q=80" alt="North Indian Specials" loading="lazy" />
+        <div class="snack-overlay"><span class="snack-name">North Indian Specials</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── OUR STORY ──────────────────────────────────────────────────── -->
+<section class="story">
+  <div class="story-img">
+    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&q=80" alt="Our Story" loading="lazy" />
+  </div>
+  <div class="story-content">
+    <p class="tag-label">Our Heritage</p>
+    <h2 class="section-title">Our <span>Story</span></h2>
+    <p>Snack Mill success stems from its blend of tradition, innovation, and unwavering quality. Its dynamism is fueled by a continuous effort to revamp products and packaging aligned with evolving demographics.</p>
+    <p>Dedicated to authenticity — sourcing saffron from Kashmir for Malpua, paneer from Delhi for savory delights — proving that great taste knows no boundaries.</p>
+    <a href="#" class="btn" style="margin-top:.5rem">Read More</a>
+  </div>
+</section>
+
+<!-- ── TRUST BADGES ───────────────────────────────────────────────── -->
+<section class="trust-badges">
+  <div class="container">
+    <div class="badges-grid">
+      <div class="badge">
+        <div class="badge-icon">🏛️</div>
+        <div class="badge-title">Since 1988</div>
+        <div class="badge-sub">Three decades of sweet heritage</div>
+      </div>
+      <div class="badge">
+        <div class="badge-icon">🇮🇳</div>
+        <div class="badge-title">Make in India</div>
+        <div class="badge-sub">Proudly crafted in India</div>
+      </div>
+      <div class="badge">
+        <div class="badge-icon">✅</div>
+        <div class="badge-title">ISO Certified</div>
+        <div class="badge-sub">Quality management certified</div>
+      </div>
+      <div class="badge">
+        <div class="badge-icon">🌱</div>
+        <div class="badge-title">Eco-Friendly</div>
+        <div class="badge-sub">Sustainable packaging</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LATEST BLOGS ───────────────────────────────────────────────── -->
+<section class="blogs">
+  <div class="container">
+    <div class="section-row">
+      <div>
+        <p class="tag-label">Stories & Recipes</p>
+        <h2 class="section-title">Latest <span>Blogs</span></h2>
+      </div>
+      <a href="#" class="btn">View All</a>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card">
+        <div class="blog-img">
+          <img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=500&q=80" alt="Corporate Gifting" loading="lazy" />
+        </div>
+        <div class="blog-body">
+          <p class="blog-date">September 12, 2025</p>
+          <h3 class="blog-title">Corporate Gifting That Goes Beyond the Box</h3>
+          <a href="#" class="read-more">Read More →</a>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img">
+          <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=500&q=80" alt="Ganpati" loading="lazy" />
+        </div>
+        <div class="blog-body">
+          <p class="blog-date">August 21, 2025</p>
+          <h3 class="blog-title">Welcoming Bappa with Sweet Traditions</h3>
+          <a href="#" class="read-more">Read More →</a>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img">
+          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80" alt="Mango" loading="lazy" />
+        </div>
+        <div class="blog-body">
+          <p class="blog-date">April 17, 2025</p>
+          <h3 class="blog-title">For the Love of Mango</h3>
+          <a href="#" class="read-more">Read More →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AVAILABLE ON ────────────────────────────────────────────────── -->
+<section class="available">
+  <div class="container">
+    <p class="tag-label">Also Available On</p>
+    <h2>Same Day Delivery in Bangalore</h2>
+    <p>Order on your favourite platforms for instant gratification</p>
+    <div class="platform-logos">
+      <a href="#" class="platform-pill">Swiggy Instamart</a>
+      <a href="#" class="platform-pill">Zomato</a>
+      <a href="#" class="platform-pill">Amazon</a>
+      <a href="#" class="platform-pill">Swiggy</a>
+      <a href="#" class="platform-pill">Zepto</a>
+      <a href="#" class="platform-pill">Blinkit</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">TheSnackMill<span style="color:var(--gold)">&</span>Sweets</a>
+        <p>With over three decades of expertise in crafting heritage sweets, TheSnackMillSweets is a symbol of quality and tradition — bringing the authentic taste of Royal India to your home.</p>
+        <p style="font-size:.72rem;opacity:.5">© 2026 TheSnackMill Sweets & Savouries LLP. All Rights Reserved.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Our Range</h4>
+        <ul>
+          <li><a href="#">Sweets</a></li>
+          <li><a href="#">Dry Fruits</a></li>
+          <li><a href="#">Gifting</a></li>
+          <li><a href="#">Indian Bakery</a></li>
+          <li><a href="#">Indian Biscottis</a></li>
+          <li><a href="#">Savouries</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>About Us</h4>
+        <ul>
+          <li><a href="#">Company</a></li>
+          <li><a href="#">Our Brands</a></li>
+          <li><a href="#">Global Footprint</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Track Your Order</a></li>
+        </ul>
+        <h4 style="margin-top:1.5rem">Legal</h4>
+        <ul>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Stay in Touch</h4>
+        <p>Mon – Sat · 10:00 AM to 5:30 PM IST</p>
+        <p style="margin:.4rem 0 1rem"><a href="mailto:thesnackmill@gmail.com" style="color:var(--gold-lt)">thesnackmill@gmail.com</a></p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Your email" />
+          <button>Subscribe</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 TheSnackMill Sweets & Savouries LLP</span>
+      <span>Payments: Visa · Mastercard · UPI · Net Banking · COD</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ── CART DRAWER ─────────────────────────────────────────────────── -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>Your Cart</h3>
+    <button class="close-cart" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <p class="cart-empty">Your cart is currently empty.</p>
+  </div>
+  <div class="cart-foot">
+    <div class="cart-subtotal">
+      <span>Subtotal</span>
+      <span id="cartSubtotal">₹ 0</span>
+    </div>
+    <a href="#" class="btn btn-gold" style="width:100%;text-align:center;display:block">Checkout</a>
+  </div>
+</div>
+
+<script>
+  /* ─── HERO SLIDER ─────────────────────────────────────────── */
+  let current = 0;
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-dot');
+
+  function goSlide(n) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  setInterval(() => goSlide((current + 1) % slides.length), 5000);
+
+  /* ─── CART ────────────────────────────────────────────────── */
+  const cart = [];
+
+  function toggleCart() {
+    document.getElementById('cartOverlay').classList.toggle('open');
+    document.getElementById('cartDrawer').classList.toggle('open');
+  }
+
+  function addToCart(name, price) {
+    const existing = cart.find(i => i.name === name);
+    if (existing) { existing.qty++; }
+    else { cart.push({ name, price, qty: 1 }); }
+    renderCart();
+  }
+
+  function renderCart() {
+    const body = document.getElementById('cartBody');
+    const count = document.getElementById('cartCount');
+    const sub = document.getElementById('cartSubtotal');
+
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+
+    count.textContent = totalQty;
+    sub.textContent = '₹ ' + total.toLocaleString('en-IN');
+
+    if (!cart.length) {
+      body.innerHTML = '<p class="cart-empty">Your cart is currently empty.</p>';
+      return;
+    }
+
+    body.innerHTML = cart.map((item, idx) => `
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:.9rem 0;border-bottom:1px solid var(--border);">
+        <div>
+          <div style="font-family:var(--ff-display);font-size:1rem;font-weight:500">${item.name}</div>
+          <div style="font-size:.78rem;color:var(--muted);margin-top:.2rem">₹ ${item.price.toLocaleString('en-IN')} × ${item.qty}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <button onclick="changeQty(${idx},-1)" style="background:var(--cream);border:1px solid var(--border);width:28px;height:28px;cursor:pointer;font-size:1rem">−</button>
+          <span style="font-size:.9rem;font-weight:500;min-width:1.2rem;text-align:center">${item.qty}</span>
+          <button onclick="changeQty(${idx},1)" style="background:var(--cream);border:1px solid var(--border);width:28px;height:28px;cursor:pointer;font-size:1rem">+</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function changeQty(idx, delta) {
+    cart[idx].qty += delta;
+    if (cart[idx].qty <= 0) cart.splice(idx, 1);
+    renderCart();
+  }
+</script>
+</body>
+</html>
